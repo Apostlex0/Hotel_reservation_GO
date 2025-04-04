@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/Apostlex0/Hotel_reservation_GO/database"
+	"github.com/Apostlex0/Hotel_reservation_GO/db"
 	"github.com/Apostlex0/Hotel_reservation_GO/types"
 	"github.com/gofiber/fiber/v2"
 )
