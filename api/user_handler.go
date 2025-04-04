@@ -13,5 +13,5 @@ func HandleGetUsers(c *fiber.Ctx) error {
 	return c.JSON(u)
 }
 func HandleGetUser(c *fiber.Ctx) error {
-	return c.JSON(map[string]string{"name": "John Doe"})
+	return c.JSON(map[string]string{"name": "John Do e"})
 }
