@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/Apostlex0/Hotel_reservation_GO/api"
+	"github.com/Apostlex0/Hotel_reservation_GO/db"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
