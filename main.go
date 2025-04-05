@@ -23,16 +23,29 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(client)
+
 	userStore := db.NewMongoUserStore(client)
+	hotelStore := db.NewMongoHotelStore(client)
+
+	store := &db.Store{
+		Hotel:   hotelStore,
+		User:    userStore,
+		Room:    db.NewMongoRoomStore(client, hotelStore),
+		Booking: db.NewMongoBookingStore(client),
+	}
 	userHandler := api.NewUserHandler(userStore)
+	hotelhandler := api.NewHotelHandler(store)
+
 	app := fiber.New()
 
 	apiv1 := app.Group("/api/v1")
 	// All of these require authentication
-	apiv1.Post("/user", userHandler.HandlePostUser)         // Create a new user
-	apiv1.Delete("/user/:id", userHandler.HandleDeleteUser) // Delete a user
-	apiv1.Get("/user", userHandler.HandleGetUsers)          // Get all users
-	apiv1.Get("/user/:id", userHandler.HandleGetUser)       // Get a specific user
+	apiv1.Post("/user", userHandler.HandlePostUser)         
+	apiv1.Delete("/user/:id", userHandler.HandleDeleteUser) 
+	apiv1.Get("/user", userHandler.HandleGetUsers)          
+	apiv1.Get("/user/:id", userHandler.HandleGetUser)       
 	apiv1.Put("user/:id", userHandler.HandlePutUser)
+
+
 	app.Listen(*listenAddr)
 }
