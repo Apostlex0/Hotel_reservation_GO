@@ -34,18 +34,21 @@ func main() {
 		Booking: db.NewMongoBookingStore(client),
 	}
 	userHandler := api.NewUserHandler(userStore)
-	hotelhandler := api.NewHotelHandler(store)
+	hotelHandler := api.NewHotelHandler(store)
 
 	app := fiber.New()
 
 	apiv1 := app.Group("/api/v1")
-	// All of these require authentication
-	apiv1.Post("/user", userHandler.HandlePostUser)         
-	apiv1.Delete("/user/:id", userHandler.HandleDeleteUser) 
-	apiv1.Get("/user", userHandler.HandleGetUsers)          
-	apiv1.Get("/user/:id", userHandler.HandleGetUser)       
+	apiv1.Post("/user", userHandler.HandlePostUser)
+	apiv1.Delete("/user/:id", userHandler.HandleDeleteUser)
+	apiv1.Get("/user", userHandler.HandleGetUsers)
+	apiv1.Get("/user/:id", userHandler.HandleGetUser)
 	apiv1.Put("user/:id", userHandler.HandlePutUser)
 
+	//hotel routes here
+	apiv1.Get("/hotel", hotelHandler.HandleGetHotels)    // Get all hotels
+	apiv1.Get("/hotel/:id", hotelHandler.HandleGetHotel) // Get a specific hotel
+	apiv1.Get("/hotel/:id/rooms", hotelHandler.HandleGetRooms)
 
 	app.Listen(*listenAddr)
 }
